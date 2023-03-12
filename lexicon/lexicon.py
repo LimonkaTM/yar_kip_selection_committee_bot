@@ -7,7 +7,6 @@ LEXICON_DATA: dict[str, str] = {
 
 LEXICON_COMMANDS: dict[str, str] = {
     '/home': 'В начало',
-    '/restart': 'Перезапустить бота',
     '/help': 'Помощь',
 }
 

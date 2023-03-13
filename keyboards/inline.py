@@ -4,7 +4,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from lexicon.lexicon import LEXICON_BUTTONS
 
 
-def create_main_menu_kb(*buttons_keys: str) -> InlineKeyboardMarkup:
+def create_inline_menu(*buttons_keys: str) -> InlineKeyboardMarkup:
     # создаём билдер клавиатуры
     kb_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
     # добавляем строки с кнопками

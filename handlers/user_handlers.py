@@ -16,7 +16,7 @@ async def process_start_command(message: Message):
         photo = FSInputFile('logo_two_fix2.png')
         await SendPhoto(chat_id=message.chat.id,
                         photo=photo,
-                        caption=LEXICON_DATA['1'],
+                        caption=LEXICON_DATA['start'],
                         reply_markup=create_inline_menu(
                                 'start-admission',
                                 'start-translate',
@@ -30,11 +30,11 @@ async def process_start_command(message: Message):
     await DeleteMessage(chat_id=message.chat.id, message_id=message.message_id)
 
 
+# Этот хэндлер будет срабатывать на команду "/help"
 @router.message(Command(commands='help'))
 async def process_restart_command(message: Message):
-    await DeleteMessage(chat_id=message.chat.id,
-                        message_id=message.message_id-1)
-    await message.answer(LEXICON_DATA['help'],
+    await DeleteMessage(chat_id=message.chat.id, message_id=message.message_id-1)
+    await message.answer('asdfasdfasfdasd asdf asdf asdf asdf asdf sadf',
                          reply_markup=create_inline_menu(
                             'back'))
     await DeleteMessage(chat_id=message.chat.id, message_id=message.message_id)

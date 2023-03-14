@@ -1,6 +1,6 @@
 from aiogram import Router
-from aiogram.filters import Command, CommandStart
-from aiogram.types import Message, FSInputFile
+from aiogram.filters import Command, CommandStart, Text
+from aiogram.types import Message, FSInputFile, CallbackQuery
 from aiogram.methods import DeleteMessage, SendPhoto
 
 from lexicon.lexicon import LEXICON_BUTTONS, LEXICON_COMMANDS, LEXICON_DATA
@@ -8,6 +8,8 @@ from keyboards.inline import create_inline_menu
 
 router: Router = Router()
 
+
+current_message = {}
 
 # Этот хэндлер будет срабатывать на команду "/start"
 @router.message(CommandStart())
@@ -20,12 +22,16 @@ async def process_start_command(message: Message):
                         reply_markup=create_inline_menu(
                                 'start-admission',
                                 'start-translate',
+                                'paid-services',
+                                'certificates-rating',
                                 'faq'))
     except BaseException:
         await message.answer(LEXICON_DATA['1'],
                              reply_markup=create_inline_menu(
                                 'start-admission',
                                 'start-translate',
+                                'paid-services',
+                                'certificates-rating',
                                 'faq'),
                              disable_web_page_preview=True)
     await DeleteMessage(chat_id=message.chat.id, message_id=message.message_id)
@@ -34,6 +40,7 @@ async def process_start_command(message: Message):
 # Этот хэндлер будет срабатывать на команду "/help"
 @router.message(Command(commands='help'))
 async def process_restart_command(message: Message):
+    current_message[message.chat.id] = 'help'
     await DeleteMessage(chat_id=message.chat.id,
                         message_id=message.message_id-1)
     await message.answer(LEXICON_DATA['help'],
@@ -43,15 +50,96 @@ async def process_restart_command(message: Message):
     await DeleteMessage(chat_id=message.chat.id, message_id=message.message_id)
 
 
-# @router.callback_query(Text(text='forward'))
-# async def process_forward_press(callback: CallbackQuery):
-#     if users_db[callback.from_user.id]['page'] < len(book):
-#         users_db[callback.from_user.id]['page'] += 1
-#         text = book[users_db[callback.from_user.id]['page']]
-#         await callback.message.edit_text(
-#             text=text,
-#             reply_markup=create_pagination_keyboard(
-#                     'backward',
-#                     f'{users_db[callback.from_user.id]["page"]}/{len(book)}',
-#                     'forward'))
-#     await callback.answer()
+
+
+
+# 1. Первое сообщение /start
+@router.callback_query(Text(text='start-admission'))
+async def process_start_admission(callback: CallbackQuery):
+    current_message[callback.message.chat.id] = '1'
+    print('Номер месседжа', current_message[callback.message.chat.id])
+    # await DeleteMessage(chat_id=callback.message.chat.id,
+    #                     message_id=callback.message.message_id-1)
+    await callback.message.answer(text=LEXICON_DATA['1.1'],
+                                  reply_markup=create_inline_menu(
+                                      'admission-rulle',
+                                      'destinations-list',
+                                      'admission-dates',
+                                      'document-submission',
+                                      'special-rights',
+                                      'back'),
+                                  disable_web_page_preview=True)
+    await DeleteMessage(chat_id=callback.message.chat.id,
+                        message_id=callback.message.message_id)
+    # await callback.answer()
+
+
+@router.callback_query(Text(text='start-translate'))
+async def process_start_translate(callback: CallbackQuery):
+    current_message[callback.message.chat.id] = '1'
+    # await DeleteMessage(chat_id=callback.message.chat.id,
+    #                     message_id=callback.message.message_id-1)
+    await callback.message.answer(text=LEXICON_DATA['1.2'],
+                                  reply_markup=create_inline_menu(
+                                      'back'),
+                                  disable_web_page_preview=True)
+    await DeleteMessage(chat_id=callback.message.chat.id,
+                        message_id=callback.message.message_id)
+    # await callback.answer()
+
+
+@router.callback_query(Text(text='paid-services'))
+async def process_paid_services(callback: CallbackQuery):
+    current_message[callback.message.chat.id] = '1'
+    # await DeleteMessage(chat_id=callback.message.chat.id,
+    #                     message_id=callback.message.message_id-1)
+    await callback.message.answer(text=LEXICON_DATA['1.3'],
+                                  reply_markup=create_inline_menu(
+                                      'back'),
+                                  disable_web_page_preview=True)
+    await DeleteMessage(chat_id=callback.message.chat.id,
+                        message_id=callback.message.message_id)
+    # await callback.answer()
+
+
+# @router.callback_query(Text(text='certificates-rating'))
+# async def process_strt_admission(callback: CallbackQuery):
+#     # await DeleteMessage(chat_id=callback.message.chat.id,
+#     #                     message_id=callback.message.message_id-1)
+#     await callback.message.answer(text=LEXICON_DATA['1.4'],
+#                                   reply_markup=create_inline_menu(
+#                                       'back'),
+#                                   disable_web_page_preview=True)
+#     await DeleteMessage(chat_id=callback.message.chat.id,
+#                         message_id=callback.message.message_id)
+#     # await callback.answer()
+
+
+@router.callback_query(Text(text='faq'))
+async def process_faq(callback: CallbackQuery):
+    current_message[callback.message.chat.id] = '1'
+    # await DeleteMessage(chat_id=callback.message.chat.id,
+    #                     message_id=callback.message.message_id-1)
+    await callback.message.answer(text=LEXICON_DATA['1.4'],
+                                  reply_markup=create_inline_menu(
+                                      'back'),
+                                  disable_web_page_preview=True)
+    await DeleteMessage(chat_id=callback.message.chat.id,
+                        message_id=callback.message.message_id)
+    # await callback.answer()
+
+
+
+@router.callback_query(Text(text='back'))
+async def process_back(callback: CallbackQuery):
+    # await DeleteMessage(chat_id=callback.message.chat.id,
+    #                     message_id=callback.message.message_id-1)
+    for mes in LEXICON_DATA:
+        if mes == current_message[callback.message.chat.id]:
+            await callback.message.answer(text=LEXICON_DATA[current_message[callback.message.chat.id]],
+                                          reply_markup=create_inline_menu(
+                                              'back'),
+                                          disable_web_page_preview=True)
+    await DeleteMessage(chat_id=callback.message.chat.id,
+                        message_id=callback.message.message_id)
+    # await callback.answer()

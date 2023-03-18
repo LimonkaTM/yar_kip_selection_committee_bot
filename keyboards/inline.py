@@ -1,17 +1,27 @@
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from lexicon.lexicon import LEXICON_BUTTONS
+# ! temp database
+from lexicon.msgs import btns, btns_msgs
 
 
-def create_inline_menu(*buttons_keys: str) -> InlineKeyboardMarkup:
-    # создаём билдер клавиатуры
+#  Create inline menu for message
+def create_msg_menu(msg_id: str) -> InlineKeyboardMarkup:
+    '''
+    Create inline menu based on database by message id.\n
+    @param: msg_id Message id
+    ! Need to rewrite with database
+    '''
+    msg_btns: dict = btns_msgs[msg_id]
+
     kb_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
-    # добавляем строки с кнопками
-    kb_builder.row(*[InlineKeyboardButton(
-        text=LEXICON_BUTTONS[button]
-        if button in LEXICON_BUTTONS else button,
-        callback_data=button) for button in buttons_keys],
-        width=1)
-    # возвращаем объект клавиатуры с кнопками
+
+    for btn_key in msg_btns:
+        if btns[btn_key]['fn'] == 'open_msg':
+            kb_builder.button(text=btns[btn_key]['content'], callback_data=f"open_msg:{msg_btns[btn_key]}")
+        elif btns[btn_key]['fn'] == 'open_url':
+            kb_builder.button(text=btns[btn_key]['content'], url=msg_btns[btn_key])
+
+    kb_builder.adjust(1)
+
     return kb_builder.as_markup()

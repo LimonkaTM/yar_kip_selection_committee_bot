@@ -3,6 +3,8 @@ from aiogram.filters import Command, CommandStart, Text
 from aiogram.types import Message, FSInputFile, CallbackQuery
 from aiogram.methods import DeleteMessage, SendPhoto
 
+#! Temp database
+
 from lexicon.msgs import msgs
 from keyboards.inline import create_msg_menu
 

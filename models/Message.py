@@ -1,16 +1,18 @@
-from peewee import AutoField, CharField, DateTimeField
-# from loader import database
+from peewee import AutoField, DateTimeField, TextField, CharField
+from loader import db
 from .BaseModel import BaseModel
 import datetime
 
 
 class Message(BaseModel):
-    id_message = AutoField()
-    data = CharField(max_length=1024, null=False)
-    type = CharField(max_length=50, null=False)
+    id = AutoField()
+    name = CharField(max_length=100, null=False, default='Имя сообщения')
+    content = TextField(null=False)
+    type = CharField(max_length=50, null=False, default='msg')
+    photo = TextField(null=True)
     created_at = DateTimeField(formats='%Y-%m-%d %H:%M:%S', null=False, default=datetime.datetime.now)
     updated_at = DateTimeField(formats='%Y-%m-%d %H:%M:%S', null=False, default=datetime.datetime.now)
 
     class Meta:
-        db_table = 'Messages'
-        # database = database
+        table_name = 'Messages'
+        database = db

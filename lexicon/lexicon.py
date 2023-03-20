@@ -71,7 +71,7 @@ LEXICON_BUTTONS: dict[str, str] = {
     'start-admission': 'Информация о приёме',
     'start-translate': 'Информация о переводе в ЯрКИП',
     'paid-services': 'Платные образовательные услуги',
-    'certificates-rating': 'Рейтинг аттекстатов (ссылка)',
+    'certificates-rating': 'Рейтинг аттекстатов',
     'faq': 'FAQ',
     # 1.1. Информация о приёме
     'admission-rulle': 'Порядок поступления',

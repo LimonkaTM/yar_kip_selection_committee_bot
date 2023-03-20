@@ -1,8 +1,8 @@
 from peewee import Model
 
-from loader import database
+from loader import db
 
 
 class BaseModel(Model):
     class Meta:
-        databse = database
+        databse = db

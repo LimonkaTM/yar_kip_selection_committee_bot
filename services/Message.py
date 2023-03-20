@@ -1,13 +1,22 @@
-from peewee import fn
-
 from models import Message
 
 
-def get_all_messages() -> list[Message]:
-    query = Message.select()
+def get_message(msg_id: int) -> Message:
+    '''
+    Get message from database by message id
+    '''
+    return Message.get_or_none(Message.id == msg_id)
 
-    return list(query)
+
+def get_start_message() -> Message:
+    '''
+    Get message with type 'start' from database
+    '''
+    return Message.get_or_none(Message.type == 'start')
 
 
-def get_message(message_id: int) -> Message:
-    return Message.get_or_none(Message.id == message_id)
+def get_help_message() -> Message:
+    '''
+    Get message with type 'help' from database
+    '''
+    return Message.get_or_none(Message.type == 'help')

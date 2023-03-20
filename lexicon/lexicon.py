@@ -63,7 +63,7 @@ LEXICON_DATA: dict[str, str] = {
 
 LEXICON_COMMANDS: dict[str, str] = {
     '/home': 'В начало',
-    '/help': 'Помощь',
+    '/help': 'Справка пользователя',
 }
 
 LEXICON_BUTTONS: dict[str, str] = {
@@ -71,7 +71,7 @@ LEXICON_BUTTONS: dict[str, str] = {
     'start-admission': 'Информация о приёме',
     'start-translate': 'Информация о переводе в ЯрКИП',
     'paid-services': 'Платные образовательные услуги',
-    'certificates-rating': 'Рейтинг аттекстатов',
+    'certificates-rating': 'Рейтинг аттестатов',
     'faq': 'FAQ',
     # 1.1. Информация о приёме
     'admission-rulle': 'Порядок поступления',

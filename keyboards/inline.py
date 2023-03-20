@@ -3,12 +3,9 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from services.MessageButton import get_msg_btns
 
 
-#  Create inline menu for message
 def create_msg_menu(msg_id: str) -> InlineKeyboardMarkup:
     '''
-    Create inline menu based on database by message id.\n
-    @param: msg_id Message id
-    ! Need to rewrite with database
+    Create inline menu based on database by message id.
     '''
     msg_btns = get_msg_btns(msg_id)
 

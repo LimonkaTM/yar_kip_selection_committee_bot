@@ -5,7 +5,7 @@ import time
 from services.MessageButton import get_msg_btns
 from services.Message import get_message
 from services.Button import get_all_btns
-
+import asyncio
 # # try:
 # #     import playhouse.postgres_ext as pw_pext
 # # except ImportError:
@@ -442,3 +442,9 @@ MessageButton.create(message=30,
                      func_value=1,
                      created_at=now,
                      updated_at=now)
+
+
+async def fn():
+    return await get_msg_btns(1)
+
+asyncio.run(fn())

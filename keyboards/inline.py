@@ -3,11 +3,11 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from services.MessageButton import get_msg_btns
 
 
-def create_msg_menu(msg_id: str) -> InlineKeyboardMarkup:
+async def create_msg_menu(msg_id: str) -> InlineKeyboardMarkup:
     '''
     Create inline menu based on database by message id.
     '''
-    msg_btns = get_msg_btns(msg_id)
+    msg_btns = await get_msg_btns(int(msg_id))
 
     kb_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
 

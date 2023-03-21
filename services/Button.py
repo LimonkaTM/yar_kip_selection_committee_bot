@@ -1,12 +1,13 @@
 from models import Button
+from loader import objects
 
 
-def get_btn(btn_key: str) -> Button:
+async def get_btn(btn_key: str) -> Button:
     '''
     Get button from database by key
     '''
-    return Button.get_or_none(Button.id == btn_key)
+    return await objects.get(Button.where(Button.id == btn_key))
 
 
-def get_all_btns():
-    return Button.select()
+async def get_all_btns():
+    return await objects.execute(Button.select())

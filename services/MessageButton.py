@@ -1,12 +1,15 @@
 from models import MessageButton
 from models import Button
-from peewee import ModelSelect
+from loader import objects
 
 
-def get_msg_btns(msg_id: int) -> ModelSelect:
+async def get_msg_btns(msg_id: int):
     '''
     Get all message buttons from database by message id.\n
     '''
-    return MessageButton.select(Button.content,
-                                Button.func,
-                                MessageButton.func_value).join(Button, attr='button').where(MessageButton.message == msg_id)
+    # x = await objects.get(MessageButton.select(Button.content,
+    #                                            Button.func,
+    #                                            MessageButton.func_value).join(Button, attr='button').where(MessageButton.message == msg_id))
+    return await objects.execute(MessageButton.select(Button.content,
+                                                      Button.func,
+                                                      MessageButton.func_value).join(Button, attr='button').where(MessageButton.message == msg_id))

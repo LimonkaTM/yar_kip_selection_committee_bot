@@ -1,22 +1,23 @@
 from models import Message
+from loader import objects
 
 
-def get_message(msg_id: int) -> Message:
+async def get_message(msg_id: int) -> Message:
     '''
     Get message from database by message id
     '''
-    return Message.get_or_none(Message.id == msg_id)
+    return await objects.get(Message.select().where(Message.id == msg_id))
 
 
-def get_start_message() -> Message:
+async def get_start_message() -> Message:
     '''
     Get message with type 'start' from database
     '''
-    return Message.get_or_none(Message.type == 'start')
+    return await objects.get(Message.select().where(Message.type == 'start'))
 
 
-def get_help_message() -> Message:
+async def get_help_message() -> Message:
     '''
     Get message with type 'help' from database
     '''
-    return Message.get_or_none(Message.type == 'help')
+    return await objects.get(Message.select().where(Message.type == 'help'))

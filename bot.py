@@ -5,7 +5,7 @@ from loader import dp, bot
 
 from handlers import other_handlers, user_handlers
 from keyboards.main_menu import set_main_menu
-
+from services.MessageButton import get_msg_btns
 # Инициализируем логгер
 logger = logging.getLogger(__name__)
 
@@ -21,6 +21,8 @@ async def main():
     # Выводим в консоль информацию о начале запуска бота
     logger.info('Starting bot')
 
+    # res = await get_msg_btns(1)
+    # print(res[0].button.content)
     # Настраиваем главное меню бота
     await set_main_menu(bot)
 
@@ -35,9 +37,6 @@ async def main():
 
 if __name__ == '__main__':
     try:
-        # Запускаем функцию main
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        # Выводим в консоль сообщение об ошибке,
-        # если получены исключения KeyboardInterrupt или SystemExit
         logger.error('Bot stopped!')
